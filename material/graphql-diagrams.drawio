@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" version="26.0.7">
+  <diagram name="Page-1" id="lw6l0L5ljMeuPd4tll0k">
+    <mxGraphModel dx="646" dy="390" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Jn7-Aia7sYhHCaMN4SfS-1" target="Jn7-Aia7sYhHCaMN4SfS-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="120" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-2" value="Client&lt;div&gt;React / Angular, Vue, Vanilla JS Apps&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry y="415" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="Jn7-Aia7sYhHCaMN4SfS-3" target="Jn7-Aia7sYhHCaMN4SfS-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-3" value="All Data from DB&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;GraphQL Objects&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="120" width="120" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-6" value="Backend Server&lt;div&gt;.Net / Java /Node/ Python etc&lt;/div&gt;&lt;div&gt;+ GraphQL Server&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ Prisma&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="400" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-7" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="530" y="190" width="100" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-8" value="DB&lt;div&gt;SQL / NoSQL&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="530" y="353" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=-0.002;entryY=0.361;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Jn7-Aia7sYhHCaMN4SfS-3" target="Jn7-Aia7sYhHCaMN4SfS-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=112.5;exitPerimeter=0;entryX=0.99;entryY=0.783;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Jn7-Aia7sYhHCaMN4SfS-7" target="Jn7-Aia7sYhHCaMN4SfS-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-12" value="Req id, title author&lt;div&gt;(Query - Post Call)&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="160" y="213" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Jn7-Aia7sYhHCaMN4SfS-13" value="Resp - JSON&lt;div&gt;id title author&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="175" y="335" width="90" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
