@@ -85,3 +85,5 @@ query {
   : type
   : scripts
 - Create GraphQL Server on top of Node HTTP Server
+
+> npm run devStart

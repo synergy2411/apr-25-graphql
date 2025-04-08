@@ -1,15 +1,29 @@
 import { createServer } from "node:http";
 import { createYoga, createSchema } from "graphql-yoga";
 
-const typeDefs = `
-    type Query {
-        hello: String
-    }
+// Scalar Types - ID, String, Boolean, Int, Float
+// Non-scalar field - Product - title, price, qty, desc, isAvailable
+
+let allUsers = [
+  { id: "u001", name: "monica", age: 23 },
+  { id: "u002", name: "ross", age: 24 },
+  { id: "u003", name: "rachel", age: 22 },
+];
+
+const typeDefs = /* GraphQL */ `
+  type Query {
+    users: [User!]!
+  }
+  type User {
+    id: ID!
+    name: String!
+    age: Int!
+  }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => "Hello World!",
+    users: () => allUsers,
   },
 };
 
