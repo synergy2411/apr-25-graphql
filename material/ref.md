@@ -87,3 +87,45 @@ query {
 - Create GraphQL Server on top of Node HTTP Server
 
 > npm run devStart
+
+---
+
+query FetchUsers{
+users{
+id
+name
+age
+comments
+{
+id
+text
+}
+}
+}
+
+query FetchPosts{
+posts{
+id
+title
+creator{
+id
+name
+}
+comments{
+id
+text
+}
+}
+}
+
+query FetchComments{
+comments{
+id
+text
+author{
+id
+name
+age
+}
+}
+}
