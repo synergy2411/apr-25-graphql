@@ -43,10 +43,10 @@ let allPosts = [
 ];
 
 let allComments = [
-  { id: "c001", text: "I like it" },
-  { id: "c002", text: "Luv it" },
-  { id: "c003", text: "Not bad" },
-  { id: "c004", text: "just like that" },
+  { id: "c001", text: "I like it", postId: "p003" },
+  { id: "c002", text: "Luv it", postId: "p001" },
+  { id: "c003", text: "Not bad", postId: "p001" },
+  { id: "c004", text: "just like that", postId: "p002" },
 ];
 
 const typeDefs = /* GraphQL */ `
@@ -67,10 +67,12 @@ const typeDefs = /* GraphQL */ `
     body: String!
     published: Boolean!
     creator: User!
+    comments: [Comment!]!
   }
   type Comment {
     id: ID!
     text: String!
+    post: Post!
   }
 `;
 
@@ -99,10 +101,18 @@ const resolvers = {
     creator: (parent, args, context, info) => {
       return allUsers.find((user) => user.id === parent.creator);
     },
+    comments: (parent, args, context, info) => {
+      return allComments.filter((comment) => comment.postId === parent.id);
+    },
   },
   User: {
     posts: (parent, args, context, info) => {
       return allPosts.filter((post) => post.creator === parent.id);
+    },
+  },
+  Comment: {
+    post: (parent, args, context, info) => {
+      return allPosts.find((post) => post.id === parent.postId);
     },
   },
 };
