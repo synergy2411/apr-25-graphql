@@ -10,14 +10,48 @@ let allUsers = [
   { id: "u003", name: "rachel", age: 22 },
 ];
 
+let allPosts = [
+  {
+    id: "p001",
+    title: "GraphQL 101",
+    body: "Awesome content",
+    published: true,
+  },
+  {
+    id: "p002",
+    title: "Refresh React",
+    body: "React bootcamp",
+    published: false,
+  },
+  {
+    id: "p003",
+    title: "NodeJS for Naive",
+    body: "For beginners",
+    published: true,
+  },
+  {
+    id: "p004",
+    title: "Spring in Java",
+    body: "Framework of Frameworks",
+    published: false,
+  },
+];
+
 const typeDefs = /* GraphQL */ `
   type Query {
     users(name: String): [User!]!
+    posts(search: String): [Post!]!
   }
   type User {
     id: ID!
     name: String!
     age: Int!
+  }
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    published: Boolean!
   }
 `;
 
@@ -28,6 +62,17 @@ const resolvers = {
         return allUsers.filter((user) => user.name.includes(args.name));
       }
       return allUsers;
+    },
+    posts: (parent, args, context, info) => {
+      if (args.search) {
+        return allPosts.filter((post) => {
+          return (
+            post.title.toLowerCase().includes(args.search.toLowerCase()) ||
+            post.body.toLowerCase().includes(args.search.toLowerCase())
+          );
+        });
+      }
+      return allPosts;
     },
   },
 };
