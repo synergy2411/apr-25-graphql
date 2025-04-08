@@ -1,5 +1,6 @@
 import { createServer } from "node:http";
 import { createYoga, createSchema } from "graphql-yoga";
+import { match } from "node:assert";
 
 // Scalar Types - ID, String, Boolean, Int, Float
 // Non-scalar field - Product - title, price, qty, desc, isAvailable
@@ -16,24 +17,28 @@ let allPosts = [
     title: "GraphQL 101",
     body: "Awesome content",
     published: true,
+    creator: "u003",
   },
   {
     id: "p002",
     title: "Refresh React",
     body: "React bootcamp",
     published: false,
+    creator: "u003",
   },
   {
     id: "p003",
     title: "NodeJS for Naive",
     body: "For beginners",
     published: true,
+    creator: "u001",
   },
   {
     id: "p004",
     title: "Spring in Java",
     body: "Framework of Frameworks",
     published: false,
+    creator: "u002",
   },
 ];
 
@@ -54,12 +59,14 @@ const typeDefs = /* GraphQL */ `
     id: ID!
     name: String!
     age: Int!
+    posts: [Post!]!
   }
   type Post {
     id: ID!
     title: String!
     body: String!
     published: Boolean!
+    creator: User!
   }
   type Comment {
     id: ID!
@@ -87,6 +94,16 @@ const resolvers = {
       return allPosts;
     },
     comments: (parent, args, context, info) => allComments,
+  },
+  Post: {
+    creator: (parent, args, context, info) => {
+      return allUsers.find((user) => user.id === parent.creator);
+    },
+  },
+  User: {
+    posts: (parent, args, context, info) => {
+      return allPosts.filter((post) => post.creator === parent.id);
+    },
   },
 };
 
