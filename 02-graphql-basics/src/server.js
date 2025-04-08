@@ -37,10 +37,18 @@ let allPosts = [
   },
 ];
 
+let allComments = [
+  { id: "c001", text: "I like it" },
+  { id: "c002", text: "Luv it" },
+  { id: "c003", text: "Not bad" },
+  { id: "c004", text: "just like that" },
+];
+
 const typeDefs = /* GraphQL */ `
   type Query {
     users(name: String): [User!]!
     posts(search: String): [Post!]!
+    comments: [Comment!]!
   }
   type User {
     id: ID!
@@ -52,6 +60,10 @@ const typeDefs = /* GraphQL */ `
     title: String!
     body: String!
     published: Boolean!
+  }
+  type Comment {
+    id: ID!
+    text: String!
   }
 `;
 
@@ -74,6 +86,7 @@ const resolvers = {
       }
       return allPosts;
     },
+    comments: (parent, args, context, info) => allComments,
   },
 };
 
