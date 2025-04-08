@@ -12,7 +12,7 @@ let allUsers = [
 
 const typeDefs = /* GraphQL */ `
   type Query {
-    users: [User!]!
+    users(name: String): [User!]!
   }
   type User {
     id: ID!
@@ -23,7 +23,12 @@ const typeDefs = /* GraphQL */ `
 
 const resolvers = {
   Query: {
-    users: () => allUsers,
+    users: (parent, args, context, info) => {
+      if (args.name) {
+        return allUsers.filter((user) => user.name.includes(args.name));
+      }
+      return allUsers;
+    },
   },
 };
 
