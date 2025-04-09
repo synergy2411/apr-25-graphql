@@ -51,6 +51,7 @@ MERN- Mongo Express React Node
 - Over-fetching: fetching more data then needed
 - under-fetching: fetching less data then needed
 - Server-centric approach
+- Multiple REST Endpoints
 
 # GraphQL API
 
@@ -82,7 +83,7 @@ query {
   > npm install graphql-yoga graphql
   > npm install nodemon -D
 - Adjust some config in package.json file
-  : type
+  : type : "module"
   : scripts
 - Create GraphQL Server on top of Node HTTP Server
 
@@ -129,3 +130,15 @@ age
 }
 }
 }
+
+---
+
+# Day 02
+
+- Schema : Specifies Server capabilities
+- Type Definition : Defines the Type of Entities / Fields
+- Resolver : functions; implementation of abstract structure
+- Query: Generic Term
+  > Query - fetch the data
+  > Mutation - Create, update and delete
+  > Subscription - real-time updates

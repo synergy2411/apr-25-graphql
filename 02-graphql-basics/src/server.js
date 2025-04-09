@@ -1,6 +1,6 @@
+import { createSchema, createYoga } from "graphql-yoga";
 import { createServer } from "node:http";
-import { createYoga, createSchema } from "graphql-yoga";
-import { match } from "node:assert";
+import { v4 } from "uuid";
 
 // Scalar Types - ID, String, Boolean, Int, Float
 // Non-scalar field - Product - title, price, qty, desc, isAvailable
@@ -55,6 +55,9 @@ const typeDefs = /* GraphQL */ `
     posts(search: String): [Post!]!
     comments: [Comment!]!
   }
+  type Mutation {
+    createUser(name: String!, age: Int!): User!
+  }
   type User {
     id: ID!
     name: String!
@@ -98,6 +101,14 @@ const resolvers = {
       return allPosts;
     },
     comments: (parent, args, context, info) => allComments,
+  },
+  Mutation: {
+    createUser: (parent, args, context, info) => {
+      const { name, age } = args;
+      let newUser = { name, age, id: v4() };
+      allUsers.push(newUser);
+      return newUser;
+    },
   },
   Post: {
     creator: (parent, args, context, info) => {
