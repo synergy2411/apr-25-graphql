@@ -6,6 +6,8 @@ import { v4 } from "uuid";
 // Scalar Types - ID, String, Boolean, Int, Float
 // Non-scalar field - Product - title, price, qty, desc, isAvailable
 
+// u001 -> p003, c001, c002, c004
+
 let allUsers = [
   { id: "u001", name: "monica", age: 23 },
   { id: "u002", name: "ross", age: 24 },
@@ -58,6 +60,7 @@ const typeDefs = /* GraphQL */ `
   }
   type Mutation {
     createUser(name: String!, age: Int!): User!
+    deleteUser(userId: ID!): User!
     createPost(data: CreatePostInput!): Post!
     deletePost(postId: ID!): Post!
     createComment(data: CreateCommentInput!): Comment!
@@ -125,6 +128,29 @@ const resolvers = {
       let newUser = { name, age, id: v4() };
       allUsers.push(newUser);
       return newUser;
+    },
+    deleteUser: (parent, args, context, info) => {
+      const position = allUsers.findIndex((user) => user.id === args.userId);
+      if (position === -1) {
+        throw new GraphQLError("Unable to delete user for id - " + args.userId);
+      }
+
+      allPosts = allPosts.filter((post) => {
+        const isMatch = post.creator === args.userId;
+        if (isMatch) {
+          allComments = allComments.filter(
+            (comment) => comment.postId !== post.id
+          );
+        }
+        return !isMatch;
+      });
+
+      allComments = allComments.filter(
+        (comment) => comment.author !== args.userId
+      );
+
+      const [deletedUser] = allUsers.splice(position, 1);
+      return deletedUser;
     },
     createPost: (parent, args, context, info) => {
       const { title, body, creatorId } = args.data;
