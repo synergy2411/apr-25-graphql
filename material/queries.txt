@@ -108,3 +108,17 @@ mutation UpdatePost{
     published
   }
 }
+
+
+POST SUBSCRIPTION
+subscription PostSubscription{
+	post{
+    mutation
+    post{
+      id
+      title
+      body
+      published
+    }
+  }
+}
