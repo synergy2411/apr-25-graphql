@@ -2,6 +2,7 @@ import { createSchema, createYoga } from "graphql-yoga";
 import { GraphQLError } from "graphql";
 import { createServer } from "node:http";
 import { v4 } from "uuid";
+import { type } from "node:os";
 
 // Scalar Types - ID, String, Boolean, Int, Float
 // Non-scalar field - Product - title, price, qty, desc, isAvailable
@@ -65,6 +66,7 @@ const typeDefs = /* GraphQL */ `
     updateUser(userId: ID!, data: UpdateUserInput): User!
     createPost(data: CreatePostInput!): Post!
     deletePost(postId: ID!): Post!
+    updatePost(postId: ID!, data: UpdatePostInput): Post!
     createComment(data: CreateCommentInput!): Comment!
     deleteComment(commentId: ID!): Comment!
   }
@@ -105,6 +107,12 @@ const typeDefs = /* GraphQL */ `
   input UpdateUserInput {
     name: String
     age: Int
+  }
+
+  input UpdatePostInput {
+    title: String
+    body: String
+    published: Boolean
   }
 `;
 
@@ -202,6 +210,25 @@ const resolvers = {
       const [deletedPost] = allPosts.splice(position, 1);
 
       return deletedPost;
+    },
+    updatePost: (parent, args, context, info) => {
+      const { title, body, published } = args.data;
+      const position = allPosts.findIndex((post) => post.id === args.postId);
+      if (position === -1) {
+        throw new GraphQLError(
+          "Unable to update the post for id - " + args.postId
+        );
+      }
+      if (typeof title === "string") {
+        allPosts[position].title = title;
+      }
+      if (typeof body === "string") {
+        allPosts[position].body = body;
+      }
+      if (typeof published === "boolean") {
+        allPosts[position].published = published;
+      }
+      return allPosts[position];
     },
     createComment: (parent, args, context, info) => {
       const { text, postId, authorId } = args.data;
