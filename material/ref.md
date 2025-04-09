@@ -135,6 +135,8 @@ age
 
 # Day 02
 
+- Scalar Types : holds single value
+- Non-scalar Types : holds more than one value
 - Schema : Specifies Server capabilities
 - Type Definition : Defines the Type of Entities / Fields
 - Resolver : functions; implementation of abstract structure
@@ -142,3 +144,7 @@ age
   > Query - fetch the data
   > Mutation - Create, update and delete
   > Subscription - real-time updates
+
+# To install UUID Package
+
+> npm install uuid

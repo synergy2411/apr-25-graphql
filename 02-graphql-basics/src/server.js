@@ -57,6 +57,7 @@ const typeDefs = /* GraphQL */ `
   }
   type Mutation {
     createUser(name: String!, age: Int!): User!
+    createPost(data: CreatePostInput): Post!
   }
   type User {
     id: ID!
@@ -78,6 +79,12 @@ const typeDefs = /* GraphQL */ `
     text: String!
     post: Post!
     author: User!
+  }
+
+  input CreatePostInput {
+    title: String!
+    body: String!
+    creatorId: ID!
   }
 `;
 
@@ -108,6 +115,22 @@ const resolvers = {
       let newUser = { name, age, id: v4() };
       allUsers.push(newUser);
       return newUser;
+    },
+    createPost: (parent, args, context, info) => {
+      const { title, body, creatorId } = args.data;
+      const position = allUsers.findIndex((user) => user.id === creatorId);
+      if (position === -1) {
+        throw new Error("Unable to find creator for id - " + creatorId);
+      }
+      let newPost = {
+        id: v4(),
+        title,
+        body,
+        published: false,
+        creator: creatorId,
+      };
+      allPosts.push(newPost);
+      return newPost;
     },
   },
   Post: {
