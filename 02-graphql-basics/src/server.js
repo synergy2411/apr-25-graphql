@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 // Non-scalar field - Product - title, price, qty, desc, isAvailable
 
 // u001 -> p003, c001, c002, c004
+// u002 -> p004, c001, c003
 
 let allUsers = [
   { id: "u001", name: "monica", age: 23 },
@@ -61,6 +62,7 @@ const typeDefs = /* GraphQL */ `
   type Mutation {
     createUser(name: String!, age: Int!): User!
     deleteUser(userId: ID!): User!
+    updateUser(userId: ID!, data: UpdateUserInput): User!
     createPost(data: CreatePostInput!): Post!
     deletePost(postId: ID!): Post!
     createComment(data: CreateCommentInput!): Comment!
@@ -98,6 +100,11 @@ const typeDefs = /* GraphQL */ `
     text: String!
     postId: ID!
     authorId: ID!
+  }
+
+  input UpdateUserInput {
+    name: String
+    age: Int
   }
 `;
 
@@ -151,6 +158,22 @@ const resolvers = {
 
       const [deletedUser] = allUsers.splice(position, 1);
       return deletedUser;
+    },
+    updateUser: (parent, args, context, info) => {
+      const { name, age } = args.data;
+      const position = allUsers.findIndex((user) => user.id === args.userId);
+      if (position === -1) {
+        throw new GraphQLError("Unable to update user for id - " + args.userId);
+      }
+      if (typeof name === "string") {
+        allUsers[position].name = name;
+      }
+
+      if (typeof age === "number") {
+        allUsers[position].age = age;
+      }
+
+      return allUsers[position];
     },
     createPost: (parent, args, context, info) => {
       const { title, body, creatorId } = args.data;
