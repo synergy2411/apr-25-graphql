@@ -148,3 +148,11 @@ age
 # To install UUID Package
 
 > npm install uuid
+
+## Mongo with Prisma
+
+- npm init -y
+- npm install prisma
+- npx prisma init
+- Install Prisma and Prettier Plugin from market place
+- npx prisma db push / pull
