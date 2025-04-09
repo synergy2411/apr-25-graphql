@@ -59,6 +59,7 @@ const typeDefs = /* GraphQL */ `
   type Mutation {
     createUser(name: String!, age: Int!): User!
     createPost(data: CreatePostInput!): Post!
+    deletePost(postId: ID!): Post!
     createComment(data: CreateCommentInput!): Comment!
     deleteComment(commentId: ID!): Comment!
   }
@@ -140,6 +141,18 @@ const resolvers = {
       };
       allPosts.push(newPost);
       return newPost;
+    },
+    deletePost: (parent, args, context, info) => {
+      const position = allPosts.findIndex((post) => post.id === args.postId);
+      if (position === -1) {
+        throw new GraphQLError("Unable to delete post for Id - " + args.postId);
+      }
+      allComments = allComments.filter(
+        (comment) => comment.postId !== args.postId
+      );
+      const [deletedPost] = allPosts.splice(position, 1);
+
+      return deletedPost;
     },
     createComment: (parent, args, context, info) => {
       const { text, postId, authorId } = args.data;
