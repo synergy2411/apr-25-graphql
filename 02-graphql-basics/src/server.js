@@ -1,4 +1,5 @@
 import { createSchema, createYoga } from "graphql-yoga";
+import { GraphQLError } from "graphql";
 import { createServer } from "node:http";
 import { v4 } from "uuid";
 
@@ -120,7 +121,7 @@ const resolvers = {
       const { title, body, creatorId } = args.data;
       const position = allUsers.findIndex((user) => user.id === creatorId);
       if (position === -1) {
-        throw new Error("Unable to find creator for id - " + creatorId);
+        throw new GraphQLError("Unable to find creator for id - " + creatorId);
       }
       let newPost = {
         id: v4(),
