@@ -16,6 +16,7 @@ type Mutation {
 
 type Subscription {
   post: PostSubscriptionPayload!
+  comment: CommentSubscriptionPayload!
 }
 
 type User {
@@ -45,6 +46,11 @@ type PostSubscriptionPayload {
   mutation: MutationType!
 }
 
+type CommentSubscriptionPayload {
+  comment: Comment!
+  mutation: MutationType!
+}
+
 input CreatePostInput {
   title: String!
   body: String!
@@ -70,5 +76,6 @@ input UpdatePostInput {
 
 enum MutationType {
   CREATED
+  UPDATED
   DELETED
 }
