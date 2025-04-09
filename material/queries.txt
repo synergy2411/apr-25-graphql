@@ -94,3 +94,17 @@ mutation UpdateUser{
     age
   }
 }
+
+
+UPDATE POST
+mutation UpdatePost{
+	updatePost(postId:"p002", data:{
+    body:"Changed Post body",
+    published:true
+  }){
+    id
+    title
+    body
+    published
+  }
+}
