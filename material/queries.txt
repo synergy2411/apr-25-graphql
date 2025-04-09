@@ -1,0 +1,84 @@
+FETCHING USERS-
+
+query FetchUsers{
+users{
+  id
+  name
+  age
+
+}
+}
+
+
+FETCHING POSTS- 
+query FetchPosts{
+  posts{
+    id
+    title
+    creator{
+      id
+      name
+    }
+  }
+}
+
+FETCHING COMMENTS-
+query FetchComments{
+  comments{
+    id
+    text
+   author{
+    id
+    name
+    age
+  }
+  }
+}
+
+CREATE USER -
+mutation CreateUser{
+  createUser(name:"Chandler", age:24){
+    id
+    name
+    age
+  }
+}
+
+CREATE POST-
+
+mutation CreatePost{
+  createPost(data:{
+    title:"Working is C#",
+    body:"Net of Dot Net",
+    creatorId:"u099"
+  }){
+    id
+    title
+    body
+    published
+  }
+}
+
+CREATE COMMENT-
+mutation CreateComment{
+  createComment(data:{
+    text:"Awesome content",
+    postId:"p001",
+    authorId: "u001"
+  }) {
+    id
+    text
+    post{
+      id
+      title
+    }
+  }
+}
+
+DELETE COMMENT- 
+mutation DeleteComment{
+  deleteComment(commentId:"c099"){
+    id
+    text
+  }
+}

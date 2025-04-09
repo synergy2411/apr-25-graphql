@@ -60,6 +60,7 @@ const typeDefs = /* GraphQL */ `
     createUser(name: String!, age: Int!): User!
     createPost(data: CreatePostInput!): Post!
     createComment(data: CreateCommentInput!): Comment!
+    deleteComment(commentId: ID!): Comment!
   }
   type User {
     id: ID!
@@ -160,6 +161,19 @@ const resolvers = {
       };
       allComments.push(newComment);
       return newComment;
+    },
+    deleteComment: (parent, args, context, info) => {
+      const position = allComments.findIndex(
+        (comment) => comment.id === args.commentId
+      );
+      if (position === -1) {
+        throw new GraphQLError(
+          "Unable to delete comment for Id -- " + args.commentId
+        );
+      }
+      const [deletedComment] = allComments.splice(position, 1);
+
+      return deletedComment;
     },
   },
   Post: {
