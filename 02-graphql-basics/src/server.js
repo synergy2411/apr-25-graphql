@@ -58,7 +58,8 @@ const typeDefs = /* GraphQL */ `
   }
   type Mutation {
     createUser(name: String!, age: Int!): User!
-    createPost(data: CreatePostInput): Post!
+    createPost(data: CreatePostInput!): Post!
+    createComment(data: CreateCommentInput!): Comment!
   }
   type User {
     id: ID!
@@ -86,6 +87,12 @@ const typeDefs = /* GraphQL */ `
     title: String!
     body: String!
     creatorId: ID!
+  }
+
+  input CreateCommentInput {
+    text: String!
+    postId: ID!
+    authorId: ID!
   }
 `;
 
@@ -132,6 +139,27 @@ const resolvers = {
       };
       allPosts.push(newPost);
       return newPost;
+    },
+    createComment: (parent, args, context, info) => {
+      const { text, postId, authorId } = args.data;
+      const postPosition = allPosts.findIndex((post) => post.id === postId);
+      if (postPosition === -1) {
+        throw new GraphQLError("Unable to find post for id - " + postId);
+      }
+
+      const userPosition = allUsers.findIndex((user) => user.id === authorId);
+      if (userPosition === -1) {
+        throw new GraphQLError("Unable to find author for ID - " + authorId);
+      }
+
+      let newComment = {
+        id: v4(),
+        text,
+        postId,
+        author: authorId,
+      };
+      allComments.push(newComment);
+      return newComment;
     },
   },
   Post: {
