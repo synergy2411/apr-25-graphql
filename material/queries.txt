@@ -82,3 +82,15 @@ mutation DeleteComment{
     text
   }
 }
+
+UPDATE USER
+mutation UpdateUser{
+  updateUser(userId:"u099", data:{
+    name:"Rachel Green"
+    age: 23
+  }){
+    id
+    name
+    age
+  }
+}
