@@ -1,8 +1,10 @@
-import { createSchema, createYoga } from "graphql-yoga";
+import { createSchema, createYoga, createPubSub } from "graphql-yoga";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import resolvers from "./graphql/resolvers/resolvers.js";
 import db from "./model/db.js";
+
+const pubsub = createPubSub();
 
 const schema = createSchema({
   typeDefs: readFileSync("./src/graphql/schema.graphql", "utf-8"), // Structure
@@ -11,8 +13,8 @@ const schema = createSchema({
 
 const yoga = createYoga({
   schema,
-  context: {
-    db,
+  context: () => {
+    return { db, pubsub };
   },
 });
 
