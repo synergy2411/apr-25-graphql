@@ -122,3 +122,60 @@ subscription PostSubscription{
     }
   }
 }
+
+-------------------
+PRISMA MONGO GRAPHQL
+--------------------
+
+CREATE USER
+mutation CreateUser{
+  signUp(data:{
+    name:"rachel",
+    age: 22,
+    email:"rachel@test.com",
+    password:"rachel123",
+    role:ADMIN
+  }){
+    message
+  }
+}
+
+
+SIGNIN 
+mutation SignIn{
+  signIn (data:{
+    email:"monica@test.com",
+    password:"monica123"
+  }){
+    token
+  }
+}
+
+FETCH POSTS
+query FetchPosts{
+  posts{
+    id
+    title
+    body
+    published
+    author{
+      name
+      age
+      email
+      role
+    }
+  }
+}
+
+CREATE POST - (REQUIRE AUTH HEADER)
+mutation CreatePost{
+  createPost(data:{
+    title:"Spring in Java",
+    body:"Great framework"
+  }){
+    id
+    title
+    body
+    published
+  }
+}
