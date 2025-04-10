@@ -16,9 +16,17 @@ const typeDefs = /* GraphQL */ `
   type Mutation {
     signUp(data: SignUpInput!): SignUpPayload!
     signIn(data: SignInInput!): SignInPayload!
+    createPost(data: CreatePostInput!): Post!
   }
   type Query {
     hello: String!
+    posts: [Post!]!
+  }
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    published: Boolean!
   }
 
   type SignUpPayload {
@@ -41,6 +49,11 @@ const typeDefs = /* GraphQL */ `
     role: Role!
   }
 
+  input CreatePostInput {
+    title: String!
+    body: String!
+    authorId: ID!
+  }
   enum Role {
     DEVELOPER
     MANAGER
@@ -102,9 +115,44 @@ const resolvers = {
         throw new GraphQLError(err);
       }
     },
+    createPost: async (parent, args, { token }, info) => {
+      try {
+        const { title, body, authorId } = args.data;
+
+        if (!token) {
+          throw new GraphQLError("Authentication required.");
+        }
+
+        const foundUser = await prisma.user.findUnique({
+          where: { id: authorId },
+        });
+        if (!foundUser) {
+          throw new GraphQLError("Author not found for given Id - " + authorId);
+        }
+        const createdPost = await prisma.post.create({
+          data: {
+            title,
+            body,
+            published: false,
+            authorId,
+          },
+        });
+        return createdPost;
+      } catch (err) {
+        throw new GraphQLError(err);
+      }
+    },
   },
   Query: {
     hello: () => "Hello World",
+    posts: async (parent, args, context, info) => {
+      try {
+        const allPosts = await prisma.post.findMany();
+        return allPosts;
+      } catch (err) {
+        throw new GraphQLError(err);
+      }
+    },
   },
 };
 
@@ -113,7 +161,17 @@ const schema = createSchema({
   resolvers,
 });
 
-const yoga = createYoga({ schema });
+const yoga = createYoga({
+  schema,
+  context: ({ request }) => {
+    let token = null;
+    const authHeader = request.headers.get("authorization");
+    if (authHeader) {
+      token = authHeader.split(" ")[1]; // "Bearer Token"  => ["Bearer", "token"]
+    }
+    return { token };
+  },
+});
 
 const server = createServer(yoga);
 
