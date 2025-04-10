@@ -8,11 +8,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Book {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  authorName String
-  numOfPages Int
-  isbn       String  @unique
-  published  Boolean
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  age      Int
+  email    String @unique
+  password String
+  role     Role
+
+  @@index([name, age])
+}
+
+enum Role {
+  DEVELOPER
+  MANAGER
+  ADMIN
 }
