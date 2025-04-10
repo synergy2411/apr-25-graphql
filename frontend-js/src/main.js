@@ -22,6 +22,14 @@ const FETCH_POSTS = gql`
   }
 `;
 
+const SIGN_IN_MUTATION = gql`
+  mutation SignIn($email: String!, $password: String!) {
+    signIn(data: { email: $email, password: $password }) {
+      token
+    }
+  }
+`;
+
 window.onload = function () {
   const listContainer = document.querySelector("#list-container");
 
@@ -44,4 +52,25 @@ window.onload = function () {
   };
 
   fetchPosts();
+
+  // Login
+  const emailEl = document.getElementById("txtEmail");
+  const passwordEl = document.getElementById("txtPassword");
+  const btnLogin = document.getElementById("btnLogin");
+
+  btnLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    client
+      .mutate({
+        mutation: SIGN_IN_MUTATION,
+        variables: {
+          email: emailEl.value,
+          password: passwordEl.value,
+        },
+      })
+      .then(({ data }) => {
+        console.log("RESPONSE : ", data);
+      })
+      .catch(console.error);
+  });
 };
