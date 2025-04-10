@@ -158,3 +158,4 @@ age
 - npx prisma db push / pull
 - npm install @prisma/client
 - npx prisma generate
+- npm install graphql-yoga graphql

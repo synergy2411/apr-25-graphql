@@ -5,13 +5,14 @@ import { GraphQLError } from "graphql";
 
 import bcrypt from "bcrypt";
 
-const { hashSync } = bcrypt;
+const { hashSync, compareSync } = bcrypt;
 
 const prisma = new PrismaClient();
 
 const typeDefs = /* GraphQL */ `
   type Mutation {
     signUp(data: SignUpInput!): SignUpPayload!
+    signIn(data: SignInInput!): SignInPayload!
   }
   type Query {
     hello: String!
@@ -21,6 +22,14 @@ const typeDefs = /* GraphQL */ `
     message: String!
   }
 
+  type SignInPayload {
+    token: String!
+  }
+
+  input SignInInput {
+    email: String!
+    password: String!
+  }
   input SignUpInput {
     name: String!
     age: Int!
@@ -53,6 +62,28 @@ const resolvers = {
         });
         console.log(createdUser);
         return { message: "User created with Id - " + createdUser.id };
+      } catch (err) {
+        console.log(err);
+        throw new GraphQLError(err);
+      }
+    },
+    signIn: async (parent, args, context, info) => {
+      try {
+        const { email, password } = args.data;
+
+        const foundUser = await prisma.user.findUnique({ where: { email } });
+
+        if (!foundUser) {
+          throw new GraphQLError("Unable to find user for email - " + email);
+        }
+
+        const isMatched = compareSync(password, foundUser.password);
+
+        if (!isMatched) {
+          throw new GraphQLError("Password does not match! Try again.");
+        }
+
+        return { token: "TOKEN_VALUE coming soon..." };
       } catch (err) {
         console.log(err);
         throw new GraphQLError(err);
