@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 
 const { hashSync, compareSync } = bcrypt;
 const { sign } = jwt;
+
 const SECRET_KET = "MY_SUPER_SECRET_KEY";
 
 const prisma = new PrismaClient();
