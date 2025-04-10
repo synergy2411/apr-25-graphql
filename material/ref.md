@@ -156,3 +156,5 @@ age
 - npx prisma init
 - Install Prisma and Prettier Plugin from market place
 - npx prisma db push / pull
+- npm install @prisma/client
+- npx prisma generate
