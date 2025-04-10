@@ -7,9 +7,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const { hashSync, compareSync } = bcrypt;
-const { sign } = jwt;
+const { sign, verify } = jwt;
 
-const SECRET_KET = "MY_SUPER_SECRET_KEY";
+const SECRET_KEY = "MY_SUPER_SECRET_KEY";
 
 const prisma = new PrismaClient();
 
@@ -53,7 +53,6 @@ const typeDefs = /* GraphQL */ `
   input CreatePostInput {
     title: String!
     body: String!
-    authorId: ID!
   }
   enum Role {
     DEVELOPER
@@ -107,7 +106,10 @@ const resolvers = {
             role: foundUser.role,
             email: foundUser.email,
           },
-          SECRET_KET
+          SECRET_KEY,
+          {
+            expiresIn: "1h",
+          }
         );
 
         return { token };
@@ -118,24 +120,26 @@ const resolvers = {
     },
     createPost: async (parent, args, { token }, info) => {
       try {
-        const { title, body, authorId } = args.data;
+        const { title, body } = args.data;
 
         if (!token) {
           throw new GraphQLError("Authentication required.");
         }
 
-        const foundUser = await prisma.user.findUnique({
-          where: { id: authorId },
-        });
-        if (!foundUser) {
-          throw new GraphQLError("Author not found for given Id - " + authorId);
-        }
+        const { id, name, age, email, role } = verify(token, SECRET_KEY);
+
+        // const foundUser = await prisma.user.findUnique({
+        //   where: { id: authorId },
+        // });
+        // if (!foundUser) {
+        //   throw new GraphQLError("Author not found for given Id - " + authorId);
+        // }
         const createdPost = await prisma.post.create({
           data: {
             title,
             body,
             published: false,
-            authorId,
+            authorId: id,
           },
         });
         return createdPost;
