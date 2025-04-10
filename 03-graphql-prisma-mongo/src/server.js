@@ -4,8 +4,11 @@ import { PrismaClient } from "../prisma/app/generated/prisma/client/index.js";
 import { GraphQLError } from "graphql";
 
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const { hashSync, compareSync } = bcrypt;
+const { sign } = jwt;
+const SECRET_KET = "MY_SUPER_SECRET_KEY";
 
 const prisma = new PrismaClient();
 
@@ -83,7 +86,17 @@ const resolvers = {
           throw new GraphQLError("Password does not match! Try again.");
         }
 
-        return { token: "TOKEN_VALUE coming soon..." };
+        const token = sign(
+          {
+            id: foundUser.id,
+            name: foundUser.name,
+            role: foundUser.role,
+            email: foundUser.email,
+          },
+          SECRET_KET
+        );
+
+        return { token };
       } catch (err) {
         console.log(err);
         throw new GraphQLError(err);
