@@ -164,12 +164,12 @@ const resolvers = {
           include: {
             author: true,
           },
-          orderBy: {
-            title: "desc",
-          },
+          //   orderBy: {
+          //     title: "desc",
+          //   },
           //   distinct: "authorId",
-          take: 3,
-          skip: 1,
+          //   take: 3,
+          //   skip: 1,
           //   select: {
           //     body: true,
           //   },

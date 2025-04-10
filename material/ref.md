@@ -159,3 +159,8 @@ age
 - npm install @prisma/client
 - npx prisma generate
 - npm install graphql-yoga graphql
+
+# to create frontend Vanilla JavaScript
+
+> npm create vite
+> npm install @apollo/client graphql react
