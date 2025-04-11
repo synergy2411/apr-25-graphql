@@ -1,13 +1,13 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import RootLayout from "./components/RootLayout/RootLayout";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from "./pages/Home/HomePage";
+import RootLayout from "./components/RootLayout/RootLayout";
 import ContactPage from "./pages/Contact/ContactPage";
-import PostsPage from "./pages/Posts/PostsPage";
+import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
+import PostsPage from "./pages/Posts/PostsPage";
 
 // Apollo Client
 const client = new ApolloClient({

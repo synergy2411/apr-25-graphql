@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
+import AuthContext from "../../context/auth-context";
 
 const USER_SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -12,6 +13,7 @@ const USER_SIGN_IN = gql`
 function LoginPage() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
+  const context = useContext(AuthContext);
 
   const [signInMutation, { error, loading }] = useMutation(USER_SIGN_IN);
 
@@ -24,7 +26,11 @@ function LoginPage() {
         password: enteredPassword,
       },
     })
-      .then(console.log)
+      .then((response) => {
+        context.setIsLoggedIn(true);
+        context.token = response.data.signIn.token;
+        localStorage.setItem("token", response.data.signIn.token);
+      })
       .catch(console.error);
   };
 
