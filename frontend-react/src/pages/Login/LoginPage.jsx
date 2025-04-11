@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
 import AuthContext from "../../context/auth-context";
+import { useNavigate } from "react-router";
 
 const USER_SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -14,8 +15,9 @@ function LoginPage() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const context = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const [signInMutation, { error, loading }] = useMutation(USER_SIGN_IN);
+  let [signInMutation, { error, loading }] = useMutation(USER_SIGN_IN);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -30,8 +32,15 @@ function LoginPage() {
         context.setIsLoggedIn(true);
         context.token = response.data.signIn.token;
         localStorage.setItem("token", response.data.signIn.token);
+        navigate("/posts");
       })
       .catch(console.error);
+  };
+
+  const resetHandler = () => {
+    localStorage.clear();
+    setEnteredEmail("");
+    setEnteredPassword("");
   };
 
   return (
@@ -86,7 +95,12 @@ function LoginPage() {
                   </div>
                   <div className="col-6">
                     <div className="d-grid">
-                      <button className="btn btn-secondary">Reset</button>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={resetHandler}
+                      >
+                        Reset
+                      </button>
                     </div>
                   </div>
                 </div>

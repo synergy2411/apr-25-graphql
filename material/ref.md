@@ -191,3 +191,8 @@ age
 - npm run dev
 - npm install react-router bootstrap
 - npm install @apollo/client graphql
+
+# React Context API
+
+- Solves prop-drilling
+- State Management

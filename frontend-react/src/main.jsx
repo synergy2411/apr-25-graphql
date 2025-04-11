@@ -8,6 +8,7 @@ import ContactPage from "./pages/Contact/ContactPage";
 import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import PostsPage from "./pages/Posts/PostsPage";
+import CreatePostPage from "./pages/CreatePost/CreatePostPage";
 
 // Apollo Client
 const client = new ApolloClient({
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/posts",
         element: <PostsPage />,
+      },
+      {
+        path: "/create-post",
+        element: <CreatePostPage />,
       },
       {
         path: "/login",

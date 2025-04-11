@@ -1,6 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 import PostItem from "../../components/PostItem/PostItem";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import AuthContext from "../../context/auth-context";
 
 const FETCH_POSTS = gql`
   query FetchPosts {
@@ -22,6 +24,7 @@ const FETCH_POSTS = gql`
 function PostsPage() {
   const { data, loading, error } = useQuery(FETCH_POSTS);
   const navigate = useNavigate();
+  const context = useContext(AuthContext);
 
   if (loading) return <h1>Loading....</h1>;
 
@@ -33,12 +36,22 @@ function PostsPage() {
       <div className="row mb-4">
         <div className="offset-4 col-4">
           <div className="d-grid">
-            <button
-              className="btn btn-secondary"
-              onClick={() => navigate("/login")}
-            >
-              Login Form
-            </button>
+            {!context.isLoggedIn && (
+              <button
+                className="btn btn-secondary"
+                onClick={() => navigate("/login")}
+              >
+                Login Form
+              </button>
+            )}
+            {context.isLoggedIn && (
+              <button
+                className="btn btn-secondary"
+                onClick={() => navigate("/create-post")}
+              >
+                Create New Post
+              </button>
+            )}
           </div>
         </div>
       </div>
