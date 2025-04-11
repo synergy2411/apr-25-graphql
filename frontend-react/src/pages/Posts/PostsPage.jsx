@@ -1,25 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
-import PostItem from "../../components/PostItem/PostItem";
-import { useNavigate } from "react-router";
+import { useQuery } from "@apollo/client";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
+import FETCH_POSTS from "../../apollo/fetch-posts";
+import PostItem from "../../components/PostItem/PostItem";
 import AuthContext from "../../context/auth-context";
-
-const FETCH_POSTS = gql`
-  query FetchPosts {
-    posts {
-      id
-      title
-      body
-      published
-      author {
-        name
-        age
-        email
-        role
-      }
-    }
-  }
-`;
 
 function PostsPage() {
   const { data, loading, error, refetch } = useQuery(FETCH_POSTS);

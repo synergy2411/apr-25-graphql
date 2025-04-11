@@ -1,17 +1,7 @@
+import { useMutation } from "@apollo/client";
 import { useRef } from "react";
-import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router";
-
-const CREATE_POST = gql`
-  mutation CreatePost($title: String!, $body: String!) {
-    createPost(data: { title: $title, body: $body }) {
-      id
-      title
-      body
-      published
-    }
-  }
-`;
+import CREATE_POST from "../../apollo/create-post";
 
 function CreatePostPage() {
   const titleRef = useRef();

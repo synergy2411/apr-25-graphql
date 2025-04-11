@@ -1,15 +1,8 @@
-import { useState, useContext } from "react";
-import { gql, useMutation } from "@apollo/client";
-import AuthContext from "../../context/auth-context";
+import { useMutation } from "@apollo/client";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-
-const USER_SIGN_IN = gql`
-  mutation SignIn($email: String!, $password: String!) {
-    signIn(data: { email: $email, password: $password }) {
-      token
-    }
-  }
-`;
+import USER_SIGN_IN from "../../apollo/user-login";
+import AuthContext from "../../context/auth-context";
 
 function LoginPage() {
   const [enteredEmail, setEnteredEmail] = useState("");
