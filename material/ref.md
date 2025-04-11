@@ -184,8 +184,8 @@ age
 
 # React Project
 
-- npm create vite -> react + JavaScript
 - Create-React-App CLI tool [depricated]
+- npm create vite -> react + JavaScript
 - cd project-folder
 - npm install
 - npm run dev
