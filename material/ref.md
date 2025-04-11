@@ -167,5 +167,27 @@ age
 
 ---
 
+# Day 04
+
 - Test : Jest
-- React App
+- React App v19.x
+  > renders the UI quickly and efficiently
+  > State Management - Redux
+  > Form Validation - React hook Form, formik, joe,
+  > SPA - React Router
+  > Virtual DOM - reconsiliatioon process, diffing algo
+  > Observers
+  > Props
+  > State
+  > Context API
+  > Hooks
+
+# React Project
+
+- npm create vite -> react + JavaScript
+- Create-React-App CLI tool [depricated]
+- cd project-folder
+- npm install
+- npm run dev
+- npm install react-router bootstrap
+- npm install @apollo/client graphql
