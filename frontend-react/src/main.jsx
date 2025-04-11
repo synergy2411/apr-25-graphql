@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./pages/Home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import PostsPage from "./pages/Posts/PostsPage";
+import LoginPage from "./pages/Login/LoginPage";
 
 // Apollo Client
 const client = new ApolloClient({
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/posts",
         element: <PostsPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
       },
       {
         path: "/contact", // http://localhost:5173/contact
