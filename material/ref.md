@@ -196,3 +196,8 @@ age
 
 - Solves prop-drilling
 - State Management
+
+# Jest : The Testing Framework
+
+> npm install jest jest-environment-jsdom cross-fetch -D
+> npm init jest

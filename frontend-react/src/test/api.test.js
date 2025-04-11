@@ -60,4 +60,6 @@ describe("GraphQL API Testing", () => {
     //   expect(data).not.toBeUndefined();
     expect(data.signIn.token).not.toBeUndefined();
   });
+
+  test("just for fun", () => {});
 });
