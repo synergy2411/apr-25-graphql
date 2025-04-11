@@ -22,9 +22,11 @@ const FETCH_POSTS = gql`
 `;
 
 function PostsPage() {
-  const { data, loading, error } = useQuery(FETCH_POSTS);
+  const { data, loading, error, refetch } = useQuery(FETCH_POSTS);
   const navigate = useNavigate();
   const context = useContext(AuthContext);
+
+  refetch();
 
   if (loading) return <h1>Loading....</h1>;
 
